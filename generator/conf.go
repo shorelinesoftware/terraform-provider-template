@@ -7,20 +7,20 @@ import (
 )
 
 var (
-	confLogPrefix         = "[Generator Provider Conf]"
-	LocalConfTemplatePath = "./provider/conf/provider_conf_template.json"
-	LocalConfPath         = "./provider/conf/provider_conf.json"
+	confLogPrefix    = "[Generator Provider Conf]"
+	ConfTemplatePath = "./templates/provider_conf_template.json.tmpl"
+	ConfPath         = "../target/provider/provider_conf.json"
 )
 
-func GenerateProviderConf(providerBrand string, envData map[string]string) {
+func GenerateProviderConf(envData map[string]string) {
 
-	tmpl, err := template.ParseFiles(LocalConfTemplatePath)
+	tmpl, err := template.ParseFiles(ConfTemplatePath)
 	if err != nil {
 		log.Println(confLogPrefix+" failed to parse files: ", err)
 		return
 	}
 
-	outputFile, err := os.Create(LocalConfPath)
+	outputFile, err := os.Create(ConfPath)
 	if err != nil {
 		log.Println(confLogPrefix+" failed to create output file: ", err)
 		return

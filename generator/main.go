@@ -8,12 +8,18 @@ import (
 	"os"
 )
 
+// Run "go generate" to format example terraform files and generate the docs for the registry/website
+
+// If you do not have terraform installed, you can remove the formatting command, but its suggested to
+// ensure the documentation is formatted properly.
+//go:generate tofu fmt -recursive ../target/examples/
+
+// Run the docs generation tool, check its repository for more information on how it works and how docs
+// can be customized.
+//go:generate go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs --provider-dir=../target --website-source-dir=../generator/templates/doc_templates --provider-name=terraform-provider-$PROVIDER_SHORT_NAME --rendered-provider-name=$RENDERED_PROVIDER_NAME --tf-version=1.5.7
+
 var (
-	NggImportFile       string = "./env/release/ngg.env"
-	ShorelineImportFile string = "./env/release/shoreline.env"
-	LocalDevImportFile  string = "./env/dev/local.env"
-	VariablesImportFile string = "./variables.env"
-	mainLogPrefix       string = "[ MAIN ]"
+	mainLogPrefix string = "[ MAIN ]"
 )
 
 func main() {
@@ -21,24 +27,13 @@ func main() {
 	providerBrand := os.Getenv("PROVIDER_BRAND")
 	useLocal := os.Getenv("USE_LOCAL")
 
-	envData, err := getEnvData(providerBrand, useLocal)
+	envData, err := GetEnvData(providerBrand, useLocal)
 	if err != nil {
 		log.Println(mainLogPrefix+" failed to get env data: ", err)
 		return
 	}
 
-	GenerateProviderConf(providerBrand, envData)
+	GenerateProviderConf(envData)
+	GenerateExamples(envData)
 
-}
-
-func getEnvData(providerBrand string, useLocal string) (envData map[string]string, err error) {
-
-	if useLocal != "" {
-		GenerateLocalDevEnv(providerBrand)
-		envData, err = GetLocalDevEnv()
-	} else {
-		envData, err = GetReleaseEnv(providerBrand)
-	}
-
-	return envData, err
 }

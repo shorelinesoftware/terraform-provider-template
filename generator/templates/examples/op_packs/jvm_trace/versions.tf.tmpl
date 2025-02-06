@@ -1,0 +1,9 @@
+
+terraform {
+  required_providers {
+    {{ .PROVIDER_SHORT_NAME }} = {
+      source  = "{{ .PROVIDER_PATH }}"
+      version = ">= 1.0.7"
+    }
+  }
+}
