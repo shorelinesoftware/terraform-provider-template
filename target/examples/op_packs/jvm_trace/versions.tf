@@ -1,8 +1,8 @@
 
 terraform {
   required_providers {
-    shoreline = {
-      source  = "shorelinesoftware/shoreline"
+    ngg = {
+      source  = "nvidia/ngg"
       version = ">= 1.0.7"
     }
   }

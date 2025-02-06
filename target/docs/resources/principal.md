@@ -3,12 +3,12 @@
 page_title: "shoreline_principal Resource - terraform-provider-shoreline"
 subcategory: ""
 description: |-
-  Shoreline principal. An authorization group (e.g. Okta groups). Note: Admin privilege (in Shoreline) to create principal objects.
+  Shoreline principal. An authorization group (e.g. Okta groups). Note: Admin privilege (in Nvidia GPU Guardian) to create principal objects.
 ---
 
 # shoreline_principal (Resource)
 
-Shoreline principal. An authorization group (e.g. Okta groups). Note: Admin privilege (in Shoreline) to create principal objects.
+Shoreline principal. An authorization group (e.g. Okta groups). Note: Admin privilege (in Nvidia GPU Guardian) to create principal objects.
 
 
 
@@ -18,7 +18,7 @@ Shoreline principal. An authorization group (e.g. Okta groups). Note: Admin priv
 ### Required
 
 - `identity` (String) The email address or provider's (e.g. Okta) group-name for a permissions group.
-- `name` (String) The name/symbol for the object within Shoreline and the op language (must be unique, only alphanumeric/underscore).
+- `name` (String) The name/symbol for the object within Nvidia GPU Guardian and the op language (must be unique, only alphanumeric/underscore).
 
 ### Optional
 

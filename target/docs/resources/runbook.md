@@ -17,7 +17,7 @@ Shoreline notebook. An interactive notebook of Op commands and user documentatio
 
 ### Required
 
-- `name` (String) The name/symbol for the object within Shoreline and the op language (must be unique, only alphanumeric/underscore).
+- `name` (String) The name/symbol for the object within Nvidia GPU Guardian and the op language (must be unique, only alphanumeric/underscore).
 
 ### Optional
 

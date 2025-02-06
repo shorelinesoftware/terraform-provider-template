@@ -29,9 +29,9 @@
 ################################################################################
 
 
-provider "shoreline" {
+provider "ngg" {
   # provider configuration here
-  #url = "${var.shoreline_url}"
+  #url = "${var.ngg_url}"
   retries = 2
   debug   = true
 }

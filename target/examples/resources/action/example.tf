@@ -1,5 +1,5 @@
 
-resource "shoreline_action" "full_action" {
+resource "ngg_action" "full_action" {
   name                    = "full_action"
   command                 = "`ls $${dir}; export FOO='bar'`"
   description             = "List some files ..."
@@ -32,7 +32,7 @@ resource "shoreline_action" "full_action" {
 }
 
 
-resource "shoreline_action" "minimal_action" {
+resource "ngg_action" "minimal_action" {
   name    = "minimal_action"
   command = "`ls $${dir}; export FOO='bar'`"
 }

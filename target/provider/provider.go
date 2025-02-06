@@ -22,7 +22,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-//go:embed conf/provider_conf.json
+//go:embed provider_conf.json
 var ObjectConfigJsonStr string
 
 var (
