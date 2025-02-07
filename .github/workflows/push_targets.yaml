@@ -72,11 +72,16 @@ jobs:
   
       - name: Copy Shoreline template
         run: |
-            cp -R ./template_clone/target ./shoreline_clone
+            cp -R ./template_clone/target/.* ./shoreline_clone
 
       # - name: Push changes to Shoreline repo
       #   run: |
-      #     cd shoreline_clone
-      #     git add .
-      #     git commit -m "push target commit"
-      #     git push
+      #       cd shoreline_clone
+      #       if git status | grep -q "nothing to commit"; then
+      #           echo "No changes to commit."
+      #       else
+      #           echo "There are changes to commit."
+      #           git add .
+      #           git commit -m "push target commit"
+      #           git push
+      #       fi
