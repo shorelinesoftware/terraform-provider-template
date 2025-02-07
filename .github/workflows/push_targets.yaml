@@ -3,31 +3,74 @@ on:
   push:
     branches:
       - main
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+  ORIGINAL_REPO_NAME: ${{ github.event.repository.name }}
+  NGG_REPO_NAME: terraform-provider-ngg
+  SHORELINE_REPO_NAME: terraform-provider-shoreline
+  ORG_NAME: shorelinesoftware
+
 jobs:
   push-targets:
     runs-on: ubuntu-latest
     steps:
-      - name: Push to destination repository
+      - uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: 1.8.5
+      - name: Setup Git Email
         run: |
           git config --global user.email "denisc@shoreline.io"
           git config --global user.name "denisc@shoreline.io"
 
+      - name: Clone repositories
+        run: |
           git clone https://${{ env.ORG_NAME }}:${{ secrets.GIT_TOKEN }}@github.com/${{ env.ORG_NAME }}/${{ env.ORIGINAL_REPO_NAME }}.git template_clone
+          git clone https://${{ env.ORG_NAME }}:${{ secrets.GIT_TOKEN }}@github.com/${{ env.ORG_NAME }}/${{ env.SHORELINE_REPO_NAME }}.git shoreline_clone
           git clone https://${{ env.ORG_NAME }}:${{ secrets.GIT_TOKEN }}@github.com/${{ env.ORG_NAME }}/${{ env.NGG_REPO_NAME }}.git ngg_clone
-          
+
+      - name: Generate NGG template
+        env:
+          PROVIDER_BRAND: ngg
+        run: |
           cd ./template_clone/generator
           make build
-
+      
+      - name: Clear NGG repo
+        run: |
+          cd ../..
           rm -rf ./ngg_clone/*
-          cp -r ./template_clone/target ./ngg_clone
 
+      - name: Copy NGG template
+        run: |
+          cp -r ./template_clone/target ./ngg_clone
+      
+      - name: Push changes to NGG repo
+        run: |
           cd ngg_clone
           git add .
           git commit -m "push target commit"
           git push
+
+      - name: Generate Shoreline template
         env:
-          PROVIDER_BRAND: ngg
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
-          ORIGINAL_REPO_NAME: ${{ github.event.repository.name }}
-          NGG_REPO_NAME: terraform-provider-ngg
-          ORG_NAME: shorelinesoftware
+          PROVIDER_BRAND: shoreline
+        run: |
+          cd ../template_clone/generator
+          make build
+
+      - name: Clear Shoreline repo
+        run: |
+          cd ../..
+          rm -rf ./shoreline_clone/*
+  
+      - name: Copy Shoreline template
+        run: |
+            cp -r ./template_clone/target ./shoreline_clone
+
+      # - name: Push changes to Shoreline repo
+      #   run: |
+      #     cd shoreline_clone
+      #     git add .
+      #     git commit -m "push target commit"
+      #     git push
