@@ -1,5 +1,5 @@
 
-/generator/env/dev/local.env
+generator/env/dev/local.env
+generator/generator_binary
 
-/target/examples
-
+target/examples/*
