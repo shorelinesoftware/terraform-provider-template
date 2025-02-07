@@ -43,7 +43,7 @@ jobs:
 
       - name: Copy NGG template
         run: |
-          cp -r ./template_clone/target ./ngg_clone
+          cp -R ./template_clone/target/* ./ngg_clone
       
       - name: Push changes to NGG repo
         run: |
