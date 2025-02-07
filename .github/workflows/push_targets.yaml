@@ -1,0 +1,30 @@
+name: CI Push Targets
+on:
+  push:
+    branches:
+      - main
+jobs:
+  push-targets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v2
+
+      - name: Push to destination repository
+        run: |
+          git config --global user.email "denisc@shoreline.io"
+          git config --global user.name "denisc@shoreline.io"
+
+          git clone https://${{ env.ORG_NAME }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.ORG_NAME }}/${{ env.ORIGINAL_REPO_NAME }}.git template_clone
+          git clone https://${{ env.ORG_NAME }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.ORG_NAME }}/${{ env.NGG_REPO_NAME }}.git ngg_clone
+
+          mv  -v ./template_clone/target/* ./ngg_clone
+          cd ngg_clone
+          git add .
+          git commit -m "push target commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          ORIGINAL_REPO_NAME: ${{ github.event.repository.name }}
+          NGG_REPO_NAME: terraform-provider-ngg
+          ORG_NAME: shorelinesoftware
