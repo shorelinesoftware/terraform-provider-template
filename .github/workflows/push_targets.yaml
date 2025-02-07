@@ -48,9 +48,14 @@ jobs:
       - name: Push changes to NGG repo
         run: |
           cd ngg_clone
-          git add .
-          git commit -m "push target commit"
-          git push
+          if git status | grep -q "nothing to commit"; then
+              echo "No changes to commit."
+          else
+              echo "There are changes to commit."
+              git add .
+              git commit -m "push target commit"
+              git push
+          fi
 
       - name: Generate Shoreline template
         env:
