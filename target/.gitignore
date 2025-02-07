@@ -1,7 +1,6 @@
 
 # generated executable
-terraform-provider-shoreline
-terraform-provider-ngg
+terraform-provider
 
 # vim swap files
 .*.swp
