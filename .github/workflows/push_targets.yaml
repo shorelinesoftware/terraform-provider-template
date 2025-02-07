@@ -56,6 +56,7 @@ jobs:
         env:
           PROVIDER_BRAND: shoreline
         run: |
+          ls
           cd ../template_clone/generator
           make build
 
