@@ -38,7 +38,6 @@ jobs:
       
       - name: Clear NGG repo
         run: |
-          cd ../..
           rm -rf ./ngg_clone/*
 
       - name: Copy NGG template
