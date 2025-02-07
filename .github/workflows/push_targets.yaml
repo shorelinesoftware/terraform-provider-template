@@ -61,8 +61,7 @@ jobs:
         env:
           PROVIDER_BRAND: shoreline
         run: |
-          ls
-          cd ../template_clone/generator
+          cd ./template_clone/generator
           make build
 
       - name: Clear Shoreline repo
