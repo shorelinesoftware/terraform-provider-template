@@ -7,9 +7,6 @@ jobs:
   push-targets:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source repository
-        uses: actions/checkout@v2
-
       - name: Push to destination repository
         run: |
           git config --global user.email "denisc@shoreline.io"
@@ -17,9 +14,11 @@ jobs:
 
           git clone https://${{ env.ORG_NAME }}:${{ secrets.GIT_TOKEN }}@github.com/${{ env.ORG_NAME }}/${{ env.ORIGINAL_REPO_NAME }}.git template_clone
           git clone https://${{ env.ORG_NAME }}:${{ secrets.GIT_TOKEN }}@github.com/${{ env.ORG_NAME }}/${{ env.NGG_REPO_NAME }}.git ngg_clone
-
-          mv  -v ./template_clone/target/* ./ngg_clone
+          
           cd ngg_clone
+          rm -rf
+          mv  -v ../template_clone/target/* .
+          
           git add .
           git commit -m "push target commit"
           git push
