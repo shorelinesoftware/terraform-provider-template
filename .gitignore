@@ -2,4 +2,3 @@
 generator/env/dev/local.env
 generator/generator_binary
 
-target/examples/*
